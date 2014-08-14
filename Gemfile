@@ -56,6 +56,10 @@ gem 'binding_of_caller'
 gem 'tzinfo-data'
 gem 'validates_formatting_of'
 
+gem 'slim'
+gem 'thin'
+
+gem 'figaro'
 group :development do
   gem 'pry-rails'
   gem 'better_errors'
