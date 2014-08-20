@@ -60,6 +60,8 @@ gem 'slim'
 gem 'thin'
 
 gem 'figaro'
+
+gem 'koala'
 group :development do
   gem 'pry-rails'
   gem 'better_errors'
