@@ -62,8 +62,8 @@ gem 'thin'
 gem 'figaro'
 
 gem 'koala'
+gem 'pry-rails'
 group :development do
-  gem 'pry-rails'
   gem 'better_errors'
 end
 
