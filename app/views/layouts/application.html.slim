@@ -10,11 +10,13 @@ html
     = analytics_init if Rails.env.production?
   body
     = render partial: "elements/navbar"
-    = bootstrap_flash
     .container
+      = bootstrap_flash
       = yield
     .footer.navbar-fixed-bottom
       p footer
+      - if Rails.env == "development"
+        =console
 
 javascript:
   <!-- begin olark code -->

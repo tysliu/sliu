@@ -353,6 +353,11 @@ GEM
       activemodel (~> 4.0)
     warden (1.2.3)
       rack (>= 1.0)
+    web-console (2.0.0.beta2)
+      activemodel (~> 4.0)
+      binding_of_caller
+      railties (~> 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -398,3 +403,4 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   validates_formatting_of
+  web-console (= 2.0.0.beta2)

@@ -65,6 +65,9 @@ gem 'koala'
 gem 'pry-rails'
 group :development do
   gem 'better_errors'
+  # gem 'web-console-pry'
+  # gem 'rack-webconsole'
+  gem 'web-console', '2.0.0.beta2'
 end
 
 group :development, :test do
