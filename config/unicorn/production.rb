@@ -33,7 +33,7 @@ timeout 30
 
 # feel free to point this anywhere accessible on the filesystem
 # pid "/tmp/unicorn.shopper.pid"
-pid "/var/www/tysliu.com/tmp"
+pid "/var/www/tysliu.com/tmp/unicorn.pid"
 
 # By default, the Unicorn logger will write to stderr.
 # Additionally, ome applications/frameworks log to stderr or stdout,

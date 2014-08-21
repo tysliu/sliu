@@ -39,7 +39,8 @@ task :environment do
 
   # For those using RVM, use this to load an RVM version@gemset.
   # invoke :'rvm:use[ruby-1.9.3-p125@default]'
-  invoke :'rvm:use[ruby-2.1.2@default]'
+  # invoke :'rvm:use[ruby-2.1.2@default]'
+  invoke :'rvm:use[ruby-2.1.2]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -64,7 +65,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     # invoke :'bundle:install'
-    invoke :'rails:db_migrate'
+    # invoke :'rails:db_migrate'
     # invoke :'rails:assets_precompile'
 
     to :launch do
@@ -78,10 +79,15 @@ end
 #                                                                       Unicorn
 # ==============================================================================
 namespace :unicorn do
-  set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
+  set :unicorn_pid, "#{deploy_to}/tmp/pids/unicorn.pid"
+  # set :start_unicorn, %{
+  #   cd #{app_path}
+  #   bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
+  # }
   set :start_unicorn, %{
-    cd #{app_path}
-    bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
+    ls -lah
+    cd #{deploy_to}
+    unicorn -c config/unicorn/#{rails_env}.rb -E #{rails_env} -D
   }
 
 #                                                                    Start task
