@@ -61,16 +61,54 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
-    queue 'source ~/.nvm/nvm.sh; nvm use v0.11.13'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     # invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
+    # invoke :'rails:assets_precompile'
 
     to :launch do
-      queue "touch #{deploy_to}/tmp/restart.txt"
+      # queue "touch #{deploy_to}/tmp/restart.txt"
+      invoke :'unicorn:restart'
     end
+  end
+end
+
+
+#                                                                       Unicorn
+# ==============================================================================
+namespace :unicorn do
+  set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
+  set :start_unicorn, %{
+    cd #{app_path}
+    bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
+  }
+
+#                                                                    Start task
+# ------------------------------------------------------------------------------
+  desc "Start unicorn"
+  task :start => :environment do
+    queue 'echo "-----> Start Unicorn"'
+    queue! start_unicorn
+  end
+
+#                                                                     Stop task
+# ------------------------------------------------------------------------------
+  desc "Stop unicorn"
+  task :stop do
+    queue 'echo "-----> Stop Unicorn"'
+    queue! %{
+      test -s "#{unicorn_pid}" && kill -QUIT `cat "#{unicorn_pid}"` && echo "Stop Ok" && exit 0
+      echo >&2 "Not running"
+    }
+  end
+
+#                                                                  Restart task
+# ------------------------------------------------------------------------------
+  desc "Restart unicorn using 'upgrade'"
+  task :restart => :environment do
+    invoke 'unicorn:stop'
+    invoke 'unicorn:start'
   end
 end
 
