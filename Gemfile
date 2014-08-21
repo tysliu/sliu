@@ -68,6 +68,7 @@ group :development do
   # gem 'web-console-pry'
   # gem 'rack-webconsole'
   gem 'web-console', '2.0.0.beta2'
+  gem 'rack-mini-profiler'
 end
 
 group :development, :test do
